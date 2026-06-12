@@ -52,7 +52,7 @@ const inputClasses =
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-24 px-6 bg-[#0a0a0f]">
+    <section id="contact" className="py-24 px-4 sm:px-6 bg-[#0a0a0f]">
       <div className="max-w-6xl mx-auto">
         <SectionTitle title="CONTACT" subtitle="Get In Touch" />
 

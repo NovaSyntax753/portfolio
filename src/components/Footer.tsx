@@ -90,7 +90,7 @@ export default function Footer() {
             transition={{ duration: 0.2 }}
             onClick={scrollToTop}
             aria-label="Back to top"
-            className="fixed bottom-8 right-8 w-11 h-11 rounded-full bg-[#00d4ff] text-black flex items-center justify-center shadow-lg hover:shadow-[0_0_20px_rgba(0,212,255,0.4)] transition-shadow cursor-pointer z-50"
+            className="fixed bottom-4 right-4 md:bottom-8 md:right-8 w-11 h-11 rounded-full bg-[#00d4ff] text-black flex items-center justify-center shadow-lg hover:shadow-[0_0_20px_rgba(0,212,255,0.4)] transition-shadow cursor-pointer z-50"
           >
             <ArrowUp className="w-5 h-5" />
           </motion.button>

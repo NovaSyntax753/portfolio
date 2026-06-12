@@ -154,7 +154,7 @@ function ProjectCard({ project }: { project: Project }) {
 
 export default function Projects() {
   return (
-    <section id="projects" className="bg-[#0a0a0f] px-6 py-24">
+    <section id="projects" className="bg-[#0a0a0f] px-4 sm:px-6 py-24">
       <div className="mx-auto max-w-6xl">
         <SectionTitle title="PROJECTS" subtitle="Featured Projects" />
 

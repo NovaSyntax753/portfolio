@@ -92,7 +92,7 @@ const cardVariants = {
 
 export default function Skills() {
   return (
-    <section id="skills" className="bg-[#111118]/50 py-24 px-6">
+    <section id="skills" className="bg-[#111118]/50 py-24 px-4 sm:px-6">
       <div className="mx-auto max-w-6xl">
         <SectionTitle title="SKILLS" subtitle="Technologies I Work With" />
 

@@ -48,7 +48,7 @@ const itemVariants = {
 
 export default function About() {
   return (
-    <section id="about" className="bg-[#0a0a0f] py-24 px-6">
+    <section id="about" className="bg-[#0a0a0f] py-24 px-4 sm:px-6">
       <div className="mx-auto max-w-6xl">
         <SectionTitle title="ABOUT" subtitle="About Me" />
 
