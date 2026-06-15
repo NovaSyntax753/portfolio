@@ -1,18 +1,35 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import { useTrail, animated, useSpring } from "@react-spring/web";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
   { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
   { name: "Skills", href: "#skills" },
-  { name: "Services", href: "#services" },
   { name: "Projects", href: "#projects" },
   { name: "Experience", href: "#experience" },
   { name: "Contact", href: "#contact" },
 ];
+
+const Logo = () => {
+  const letters = "Tejas.".split("");
+  return (
+    <a href="#home" className="flex items-center text-3xl font-heading tracking-widest cursor-pointer group perspective-1000">
+      {letters.map((letter, i) => (
+        <span
+          key={i}
+          className="inline-block transition-transform duration-500 group-hover:rotate-y-360 text-chrome-2"
+          style={{ transitionDelay: `${i * 60}ms` }}
+        >
+          {letter === "." ? <span className="text-iridescent-a">.</span> : letter}
+        </span>
+      ))}
+    </a>
+  );
+};
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -55,118 +72,109 @@ export default function Navbar() {
     }
   };
 
+  // Mobile Menu Springs
+  const menuSpring = useSpring({
+    opacity: isMobileOpen ? 1 : 0,
+    pointerEvents: isMobileOpen ? "auto" : "none",
+    config: { tension: 280, friction: 60 },
+  });
+
+  const trail = useTrail(navLinks.length, {
+    config: { mass: 1, tension: 280, friction: 20 },
+    opacity: isMobileOpen ? 1 : 0,
+    x: 0,
+    y: isMobileOpen ? 0 : 50,
+  });
+
   return (
     <>
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      <nav
+        className={`fixed z-50 transition-all duration-500 top-0 left-0 right-0 ${
           isScrolled
-            ? "bg-[#0a0a0f]/80 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-black/20"
-            : "bg-transparent"
+            ? "bg-void/80 backdrop-blur-[24px] border-b border-white/[0.06]"
+            : "bg-transparent border-b border-transparent"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Logo */}
-            <a
-              href="#home"
-              onClick={(e) => {
-                e.preventDefault();
-                handleClick("#home");
-              }}
-              className="text-xl md:text-2xl font-bold tracking-tight"
-            >
-              Tejas
-              <span className="text-[#00d4ff]">.</span>
-            </a>
+          <div className="flex items-center justify-between h-20">
+            <Logo />
 
             {/* Desktop Nav */}
-            <div className="hidden md:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleClick(link.href);
-                  }}
-                  className={`relative px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
-                    activeSection === link.href.slice(1)
-                      ? "text-[#00d4ff]"
-                      : "text-[#8888a0] hover:text-white"
-                  }`}
-                >
-                  {link.name}
-                  {activeSection === link.href.slice(1) && (
-                    <motion.div
-                      layoutId="activeNav"
-                      className="absolute inset-0 bg-[#00d4ff]/10 rounded-full border border-[#00d4ff]/20"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                </a>
-              ))}
+            <div className="hidden md:flex items-center gap-6">
+              {navLinks.map((link) => {
+                const isActive = activeSection === link.href.slice(1);
+                return (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleClick(link.href);
+                    }}
+                    className={`relative text-sm font-mono tracking-widest uppercase transition-colors duration-300 cursor-pointer ${
+                      isActive ? "text-chrome-2 chromatic-text" : "text-white/40 hover:text-chrome-2"
+                    }`}
+                  >
+                    {link.name}
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeNavIndicator"
+                        className="absolute -bottom-2 left-0 right-0 h-[2px] bg-gradient-to-r from-iridescent-a to-iridescent-b"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </a>
+                );
+              })}
             </div>
 
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileOpen(!isMobileOpen)}
-              className="md:hidden relative z-50 w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 border border-white/10"
+              className="md:hidden relative z-[60] w-12 h-12 flex items-center justify-center cursor-pointer"
               aria-label="Toggle menu"
             >
               {isMobileOpen ? (
-                <X className="w-5 h-5 text-white" />
+                <X className="w-6 h-6 text-chrome-2" />
               ) : (
-                <Menu className="w-5 h-5 text-white" />
+                <Menu className="w-6 h-6 text-chrome-2" />
               )}
             </button>
           </div>
         </div>
-      </motion.nav>
+      </nav>
 
       {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isMobileOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-[#0a0a0f]/95 backdrop-blur-xl md:hidden"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
-              className="flex flex-col items-center justify-center h-full gap-6"
-            >
-              {navLinks.map((link, i) => (
-                <motion.a
-                  key={link.name}
-                  href={link.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleClick(link.href);
-                  }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + i * 0.05 }}
-                  className={`text-2xl font-semibold transition-colors ${
-                    activeSection === link.href.slice(1)
-                      ? "text-[#00d4ff]"
-                      : "text-[#8888a0] hover:text-white"
-                  }`}
-                >
-                  {link.name}
-                </motion.a>
-              ))}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <animated.div
+        style={{
+          opacity: menuSpring.opacity,
+          pointerEvents: isMobileOpen ? 'auto' : 'none'
+        }}
+        className="fixed inset-0 z-50 bg-void/95 backdrop-blur-3xl flex flex-col items-center justify-center md:hidden"
+      >
+        <div className="flex flex-col items-center gap-8">
+          {trail.map((style, index) => {
+            const link = navLinks[index];
+            const isActive = activeSection === link.href.slice(1);
+            return (
+              <animated.a
+                key={link.name}
+                href={link.href}
+                style={{ ...style }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleClick(link.href);
+                }}
+                className={`text-4xl font-heading tracking-widest uppercase cursor-pointer ${
+                  isActive ? "text-transparent bg-clip-text bg-gradient-to-r from-iridescent-a to-iridescent-b" : "text-chrome-2"
+                }`}
+              >
+                {link.name}
+              </animated.a>
+            );
+          })}
+        </div>
+      </animated.div>
     </>
   );
 }

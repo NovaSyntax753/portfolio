@@ -71,8 +71,11 @@ const cardVariants = {
 
 export default function Services() {
   return (
-    <section id="services" className="bg-[#0a0a0f] py-24 px-6">
-      <div className="mx-auto max-w-6xl">
+    <section id="services" className="bg-void py-24 px-4 sm:px-6 relative overflow-hidden">
+      {/* Background glow to match other sections */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-iridescent-a/5 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="mx-auto max-w-6xl relative z-10">
         <SectionTitle title="SERVICES" subtitle="What I Do" />
 
         <motion.div
@@ -86,18 +89,18 @@ export default function Services() {
             <motion.div
               key={service.title}
               variants={cardVariants}
-              className="group relative flex flex-col rounded-2xl border border-white/5 bg-[#111118] p-8 transition-all duration-300 hover:-translate-y-1 hover:border-[#00d4ff]/30 hover:shadow-[0_8px_32px_rgba(0,212,255,0.08)]"
+              className="group glass-card glass-card-hover gradient-border rounded-2xl p-8 flex flex-col cursor-pointer"
             >
               {/* Icon */}
-              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-white/5 text-[#00d4ff] transition-colors duration-300 group-hover:bg-[#00d4ff]/10">
+              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-iridescent-a/10 text-iridescent-a group-hover:bg-iridescent-a/20 transition-colors duration-300">
                 <service.icon className="h-6 w-6" strokeWidth={1.5} />
               </div>
 
               {/* Content */}
-              <h3 className="mb-3 text-xl font-bold text-white">
+              <h3 className="mb-3 text-xl font-bold text-chrome-2 font-heading tracking-widest uppercase">
                 {service.title}
               </h3>
-              <p className="mb-6 text-sm leading-relaxed text-[#8888a0]">
+              <p className="mb-6 text-sm leading-relaxed text-chrome-1/80">
                 {service.description}
               </p>
 
@@ -106,9 +109,9 @@ export default function Services() {
                 {service.points.map((point) => (
                   <li
                     key={point}
-                    className="flex items-center gap-3 text-sm text-[#c0c0d0]"
+                    className="flex items-center gap-3 text-sm text-chrome-1/70"
                   >
-                    <ArrowRight className="h-3.5 w-3.5 text-[#00d4ff] shrink-0" />
+                    <ArrowRight className="h-3.5 w-3.5 text-iridescent-a shrink-0" />
                     {point}
                   </li>
                 ))}

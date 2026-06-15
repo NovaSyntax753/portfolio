@@ -10,12 +10,12 @@ interface Particle {
   radius: number;
 }
 
-const PARTICLE_COUNT = 80;
+const PARTICLE_COUNT = 60;
 const CONNECTION_DISTANCE = 120;
 const MOUSE_RADIUS = 150;
 const MOUSE_FORCE = 0.8;
-const PARTICLE_COLOR = 'rgba(0,212,255,0.3)';
-const LINE_COLOR = 'rgba(0,212,255,0.1)';
+const PARTICLE_COLOR = 'rgba(34,197,94,0.25)';
+const LINE_COLOR = 'rgba(34,197,94,0.08)';
 
 export default function ParticleCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -134,7 +134,7 @@ export default function ParticleCanvas() {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(0,212,255,${opacity})`;
+            ctx.strokeStyle = `rgba(34,197,94,${opacity})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }

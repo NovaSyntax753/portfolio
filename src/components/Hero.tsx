@@ -2,220 +2,176 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown, Download, FolderOpen } from 'lucide-react';
-import { GithubIcon, LinkedinIcon, InstagramIcon, XIcon } from './Icons';
+import { Download, FolderOpen } from 'lucide-react';
 import Image from 'next/image';
-import ParticleCanvas from './ParticleCanvas';
+import dynamic from 'next/dynamic';
+import { GithubIcon, LinkedinIcon, InstagramIcon, XIcon } from './Icons';
+import MagneticWrapper from './MagneticWrapper';
 
-const roles = [
-  'Full Stack Developer',
-  'React & Next.js Specialist',
-  'UI/UX Enthusiast',
-];
+// Lazy load Three.js component
+const ChromaticShatter = dynamic(() => import('./ChromaticShatter'), {
+  ssr: false,
+});
 
 const containerVariants = {
   hidden: {},
   visible: {
     transition: {
       staggerChildren: 0.15,
-      delayChildren: 0.2,
+      delayChildren: 0.3,
     },
   },
 };
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
+const textReveal = {
+  hidden: { opacity: 0, y: 40, filter: 'blur(10px)' },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: 'easeOut' as const },
+    filter: 'blur(0px)',
+    transition: { duration: 0.8, ease: [0.2, 0.65, 0.3, 0.9] as any },
+  },
+};
+
+const letterRevealVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: "easeOut" as any },
   },
 };
 
 export default function Hero() {
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [displayText, setDisplayText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [cursorVisible, setCursorVisible] = useState(true);
+  const [typedText, setTypedText] = useState("");
+  const fullText = "Building dynamic digital experiences.";
 
-  // Typing effect
   useEffect(() => {
-    const currentRole = roles[roleIndex];
-    let timeout: NodeJS.Timeout;
-
-    if (isDeleting) {
-      if (displayText === '') {
-        setIsDeleting(false);
-        setRoleIndex((prev) => (prev + 1) % roles.length);
+    let i = 0;
+    const timer = setInterval(() => {
+      if (i < fullText.length) {
+        setTypedText(fullText.slice(0, i + 1));
+        i++;
       } else {
-        timeout = setTimeout(() => {
-          setDisplayText(currentRole.slice(0, displayText.length - 1));
-        }, 40);
+        clearInterval(timer);
       }
-    } else {
-      if (displayText === currentRole) {
-        timeout = setTimeout(() => {
-          setIsDeleting(true);
-        }, 1800);
-      } else {
-        timeout = setTimeout(() => {
-          setDisplayText(currentRole.slice(0, displayText.length + 1));
-        }, 80);
-      }
-    }
-
-    return () => clearTimeout(timeout);
-  }, [displayText, isDeleting, roleIndex]);
-
-  // Blinking cursor
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCursorVisible((prev) => !prev);
-    }, 530);
-    return () => clearInterval(interval);
+    }, 100);
+    return () => clearInterval(timer);
   }, []);
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a0a0f]">
-      {/* Particle Background */}
-      <ParticleCanvas />
-
-      {/* Subtle radial gradient overlay */}
-      <div className="absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_center,rgba(0,212,255,0.03)_0%,transparent_70%)]" />
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-void">
+      {/* Three.js Background */}
+      <ChromaticShatter />
 
       {/* Main Content */}
       <motion.div
-        className="relative z-10 flex w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-16 py-20 flex-col lg:flex-row items-center gap-12 lg:gap-16"
+        className="relative z-10 flex w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-16 py-32 flex-col lg:flex-row items-center gap-16"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        {/* Text Content */}
-        <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left">
-          {/* Greeting */}
-          <motion.p
-            variants={fadeUp}
-            className="text-lg text-[#8888a0] mb-3 tracking-wide"
-          >
-            Hello, I&apos;m
-          </motion.p>
-
-          {/* Name */}
-          <motion.h1
-            variants={fadeUp}
-            className="text-5xl md:text-7xl lg:text-8xl font-extrabold mb-4 leading-tight"
-          >
-            <span className="bg-gradient-to-r from-[#00d4ff] to-[#7c3aed] bg-clip-text text-transparent">
-              Tejas Dhok
-            </span>
-          </motion.h1>
-
-          {/* Typing Effect */}
+        {/* Left: Massive Typography */}
+        <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left z-10">
           <motion.div
-            variants={fadeUp}
-            className="text-xl md:text-2xl text-[#c0c0d0] mb-6 h-9 font-mono"
+            className="flex flex-col text-[120px] md:text-[140px] lg:text-[160px] font-heading leading-[0.8] mb-6 select-none"
+            variants={containerVariants}
           >
-            <span>{displayText}</span>
-            <span
-              className={`inline-block ml-0.5 text-[#00d4ff] transition-opacity duration-100 ${
-                cursorVisible ? 'opacity-100' : 'opacity-0'
-              }`}
-            >
-              |
-            </span>
+            <div className="flex overflow-hidden pb-4">
+              {"TEJAS".split("").map((char, index) => (
+                <motion.span
+                  key={index}
+                  variants={letterRevealVariants}
+                  className="text-iridescent hover:scale-105 transition-transform duration-300"
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </div>
+            <div className="flex overflow-hidden pb-4">
+              {"DHOK".split("").map((char, index) => (
+                <motion.span
+                  key={index}
+                  variants={letterRevealVariants}
+                  className="text-transparent bg-clip-text bg-gradient-to-b from-chrome-2 to-white/10 hover:scale-105 transition-transform duration-300"
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </div>
           </motion.div>
 
-          {/* Tagline */}
-          <motion.p
-            variants={fadeUp}
-            className="text-[#8888a0] text-base md:text-lg max-w-2xl mb-10 leading-relaxed"
-          >
-            Building responsive web applications with modern frontend and
-            backend technologies. Experienced in Next.js, React, TypeScript,
-            and Supabase.
-          </motion.p>
+          {/* Role Tag & Typing */}
+          <motion.div variants={textReveal} className="mb-10">
+            <div className="inline-block px-4 py-2 border border-white/10 rounded-full bg-surface backdrop-blur-md text-chrome-2 font-mono text-sm tracking-widest uppercase mb-6 shadow-xl">
+              Software Engineer / Designer
+            </div>
+            <div className="text-iridescent-a font-mono text-lg md:text-xl h-8">
+              {typedText}<span className="typing-cursor"></span>
+            </div>
+          </motion.div>
 
-          {/* CTA Buttons */}
           <motion.div
-            variants={fadeUp}
-            className="flex flex-wrap gap-4 mb-10 justify-center lg:justify-start"
+            variants={textReveal}
+            className="flex flex-wrap gap-6 mb-12 justify-center lg:justify-start"
           >
-            <a
-              href="#projects"
-              className="group inline-flex items-center gap-2 bg-gradient-to-r from-[#00d4ff] to-[#7c3aed] text-white font-semibold rounded-full px-8 py-3 transition-transform duration-200 hover:scale-105 active:scale-95 shadow-lg shadow-[#00d4ff]/20"
-            >
-              <FolderOpen className="w-4 h-4" />
-              View Projects
-            </a>
-            <a
-              href="/resume.pdf"
-              download
-              className="group inline-flex items-center gap-2 border-2 border-[#00d4ff] text-[#00d4ff] font-semibold rounded-full px-8 py-3 transition-all duration-200 hover:bg-[#00d4ff] hover:text-[#0a0a0f] hover:scale-105 active:scale-95"
-            >
-              <Download className="w-4 h-4" />
-              Download Resume
-            </a>
+            <MagneticWrapper pullFactor={20}>
+              <a
+                href="#projects"
+                className="liquid-btn group flex items-center gap-3 px-8 py-4 rounded-xl font-mono text-sm tracking-widest uppercase shadow-2xl shadow-iridescent-a/10"
+              >
+                <FolderOpen className="w-5 h-5 group-hover:animate-bounce" />
+                View Projects
+              </a>
+            </MagneticWrapper>
+            <MagneticWrapper pullFactor={20}>
+              <a
+                href="/resume.pdf"
+                download
+                className="group relative flex items-center gap-3 px-8 py-4 rounded-xl border border-white/10 text-chrome-2 font-mono text-sm tracking-widest uppercase chromatic-text transition-all duration-300 hover:border-iridescent-c hover:bg-white/5"
+              >
+                <Download className="w-5 h-5 text-iridescent-c group-hover:-translate-y-1 transition-transform" />
+                Resume
+              </a>
+            </MagneticWrapper>
           </motion.div>
 
           {/* Social Links */}
           <motion.div
-            variants={fadeUp}
-            className="flex gap-5 items-center"
+            variants={textReveal}
+            className="flex gap-6 items-center"
           >
-            <a
-              href="https://github.com/tejasdhok"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub"
-              className="text-[#8888a0] hover:text-[#00d4ff] transition-colors duration-200"
-            >
-              <GithubIcon className="w-6 h-6" />
-            </a>
-            <a
-              href="https://linkedin.com/in/tejasdhok"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              className="text-[#8888a0] hover:text-[#00d4ff] transition-colors duration-200"
-            >
-              <LinkedinIcon className="w-6 h-6" />
-            </a>
-            <a
-              href="https://www.instagram.com/tejasdhok28/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-              className="text-[#8888a0] hover:text-[#00d4ff] transition-colors duration-200"
-            >
-              <InstagramIcon className="w-6 h-6" />
-            </a>
-            <a
-              href="https://x.com/TejasDhok28"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="X (Twitter)"
-              className="text-[#8888a0] hover:text-[#00d4ff] transition-colors duration-200"
-            >
-              <XIcon className="w-6 h-6" />
-            </a>
+            {[
+              { icon: GithubIcon, href: "https://github.com/tejasdhok" },
+              { icon: LinkedinIcon, href: "https://linkedin.com/in/tejasdhok" },
+              { icon: InstagramIcon, href: "https://www.instagram.com/tejasdhok28/" },
+              { icon: XIcon, href: "https://x.com/TejasDhok28" },
+            ].map((social, i) => (
+              <a
+                key={i}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 text-chrome-2 hover:border-iridescent-b hover:text-iridescent-b hover:shadow-[0_0_20px_rgba(191,0,255,0.3)] transition-all duration-300"
+              >
+                <social.icon className="w-5 h-5" />
+              </a>
+            ))}
           </motion.div>
         </div>
 
-        {/* Profile Photo (desktop only) */}
+        {/* Right: Hexagon Photo */}
         <motion.div
-          variants={fadeUp}
-          className="hidden lg:flex flex-shrink-0 items-center justify-center"
+          variants={textReveal}
+          className="hidden lg:flex flex-1 justify-center relative z-10"
         >
-          <div className="relative w-72 h-72 xl:w-80 xl:h-80">
-            {/* Glow ring */}
-            <div className="absolute -inset-2 rounded-full bg-gradient-to-tr from-[#00d4ff] to-[#7c3aed] opacity-40 blur-lg" />
-            <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-[#00d4ff] to-[#7c3aed] opacity-60" />
-            <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-[#00d4ff]/30">
+          <div className="relative w-80 h-80 xl:w-96 xl:h-96 conic-border shadow-2xl shadow-iridescent-b/20" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)", padding: "4px" }}>
+            <div className="w-full h-full bg-void" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
               <Image
                 src="/tejas-photo.jpg"
                 alt="Tejas Dhok"
                 fill
-                className="object-cover"
+                className="object-cover opacity-90 hover:opacity-100 mix-blend-luminosity hover:mix-blend-normal transition-all duration-700"
                 priority
               />
             </div>
@@ -223,23 +179,12 @@ export default function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Scroll Down Indicator */}
+      {/* Minimal Scroll Line */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 0.8 }}
-      >
-        <span className="text-xs text-[#8888a0] tracking-widest uppercase mb-1">
-          Scroll
-        </span>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <ChevronDown className="w-5 h-5 text-[#00d4ff]" />
-        </motion.div>
-      </motion.div>
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-px h-16 bg-gradient-to-b from-transparent via-iridescent-a to-transparent opacity-50"
+        animate={{ opacity: [0.2, 1, 0.2] }}
+        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+      />
     </section>
   );
 }

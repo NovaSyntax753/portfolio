@@ -1,16 +1,25 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Bebas_Neue, DM_Sans, Fira_Code } from "next/font/google";
 import "../globals.css";
+import CursorGlow from "@/components/CursorGlow";
 
-const inter = Inter({
+const bebasNeue = Bebas_Neue({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-heading",
   display: "swap",
+  weight: ["400"],
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-jetbrains",
+  variable: "--font-body",
+  display: "swap",
+  weight: ["400", "500", "700"],
+});
+
+const firaCode = Fira_Code({
+  subsets: ["latin"],
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -106,8 +115,9 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased overflow-x-hidden w-full`}
+        className={`${bebasNeue.variable} ${dmSans.variable} ${firaCode.variable} font-body antialiased overflow-x-hidden w-full bg-void text-chrome-2`}
       >
+        <CursorGlow />
         {children}
       </body>
     </html>
