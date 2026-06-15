@@ -1,63 +1,50 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export default function CursorGlow() {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [targetPosition, setTargetPosition] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(false);
-  const requestRef = useRef<number | null>(null);
+  
+  const mouseX = useMotionValue(-150);
+  const mouseY = useMotionValue(-150);
+
+  const smoothX = useSpring(mouseX, { stiffness: 100, damping: 30, mass: 0.5 });
+  const smoothY = useSpring(mouseY, { stiffness: 100, damping: 30, mass: 0.5 });
 
   useEffect(() => {
-    // Check for reduced motion
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (mediaQuery.matches) return;
 
-    // Show glow after 600ms load sequence
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 600);
+    const timer = setTimeout(() => setIsVisible(true), 600);
 
     const updateMousePosition = (e: MouseEvent) => {
-      setTargetPosition({ x: e.clientX, y: e.clientY });
+      mouseX.set(e.clientX - 150);
+      mouseY.set(e.clientY - 150);
     };
 
-    window.addEventListener("mousemove", updateMousePosition);
-
-    const animate = () => {
-      setPosition((prev) => {
-        // Lerp factor 0.08
-        const dx = targetPosition.x - prev.x;
-        const dy = targetPosition.y - prev.y;
-        return {
-          x: prev.x + dx * 0.08,
-          y: prev.y + dy * 0.08,
-        };
-      });
-      requestRef.current = requestAnimationFrame(animate);
-    };
-
-    requestRef.current = requestAnimationFrame(animate);
+    window.addEventListener("mousemove", updateMousePosition, { passive: true });
 
     return () => {
       clearTimeout(timer);
       window.removeEventListener("mousemove", updateMousePosition);
-      if (requestRef.current) cancelAnimationFrame(requestRef.current);
     };
-  }, [targetPosition]);
+  }, [mouseX, mouseY]);
 
   if (!isVisible) return null;
 
   return (
-    <div
+    <motion.div
       className="fixed pointer-events-none z-50 mix-blend-screen"
       style={{
         left: 0,
         top: 0,
         width: "300px",
         height: "300px",
-        transform: `translate3d(${position.x - 150}px, ${position.y - 150}px, 0)`,
+        x: smoothX,
+        y: smoothY,
         background: "radial-gradient(circle, rgba(0,255,247,0.1) 0%, rgba(0,0,0,0) 70%)",
+        willChange: "transform",
       }}
     />
   );

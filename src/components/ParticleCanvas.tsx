@@ -10,7 +10,7 @@ interface Particle {
   radius: number;
 }
 
-const PARTICLE_COUNT = 60;
+const PARTICLE_COUNT = 40;
 const CONNECTION_DISTANCE = 120;
 const MOUSE_RADIUS = 150;
 const MOUSE_FORCE = 0.8;
@@ -45,7 +45,7 @@ export default function ParticleCanvas() {
     if (!ctx) return;
 
     const resize = () => {
-      const dpr = window.devicePixelRatio || 1;
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       canvas.width = window.innerWidth * dpr;
       canvas.height = window.innerHeight * dpr;
       canvas.style.width = `${window.innerWidth}px`;
@@ -146,8 +146,8 @@ export default function ParticleCanvas() {
 
     rafRef.current = requestAnimationFrame(animate);
 
-    window.addEventListener('resize', resize);
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('resize', resize, { passive: true });
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     window.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
