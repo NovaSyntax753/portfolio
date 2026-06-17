@@ -66,7 +66,7 @@ export default function Hero() {
 
       {/* Main Content */}
       <motion.div
-        className="relative z-10 flex w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-16 py-32 flex-col lg:flex-row items-center gap-16"
+        className="relative z-10 flex w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-16 py-32 flex-col lg:flex-row items-center lg:items-start gap-16 lg:gap-8"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -115,7 +115,7 @@ export default function Hero() {
             <div className="inline-block px-5 py-3 border border-white/10 rounded-full bg-surface backdrop-blur-md text-chrome-2 font-mono text-sm tracking-widest uppercase mb-6 shadow-xl max-w-2xl leading-relaxed">
               FULL-STACK DEVELOPER BUILDING PRODUCTION APPS WITH NEXT.JS, TYPESCRIPT & SUPABASE
             </div>
-            <div className="text-iridescent-b font-mono text-lg md:text-xl h-8 flex items-center">
+            <div className="text-iridescent-b font-mono text-lg md:text-xl h-8 flex items-center justify-center lg:justify-start">
               {typedText}<span className="inline-block w-3 h-5 ml-2 bg-iridescent-b animate-pulse"></span>
             </div>
           </motion.div>
@@ -172,18 +172,38 @@ export default function Hero() {
         {/* Right: Hexagon Photo */}
         <motion.div
           variants={textReveal}
-          className="hidden lg:flex flex-1 justify-center relative z-10"
+          className="hidden lg:flex flex-1 justify-center lg:justify-end relative z-10 lg:pt-4"
         >
-          <div className="relative w-80 h-80 xl:w-96 xl:h-96 conic-border shadow-2xl shadow-iridescent-b/20" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)", padding: "4px" }}>
-            <div className="w-full h-full bg-void" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
-              <Image
-                src="/tejas-photo.jpg"
-                alt="Tejas Dhok"
-                fill
-                className="object-cover opacity-90 hover:opacity-100 mix-blend-luminosity hover:mix-blend-normal transition-all duration-700"
-                priority
-              />
+          <div className="relative w-80 h-80 xl:w-[420px] xl:h-[420px]">
+            {/* Glowing Backdrop behind Hexagon */}
+            <div 
+              className="absolute inset-0 bg-gradient-to-br from-iridescent-a via-iridescent-b to-iridescent-c opacity-30 blur-[60px] rounded-full animate-pulse"
+            ></div>
+            
+            {/* Hexagon Border */}
+            <div 
+              className="absolute inset-0 bg-gradient-to-tr from-white/20 via-white/5 to-white/20 p-[2px] shadow-2xl"
+              style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
+            >
+              <div 
+                className="relative w-full h-full bg-void"
+                style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
+              >
+                <Image
+                  src="/tejas-photo.jpg"
+                  alt="Tejas Dhok"
+                  fill
+                  className="object-cover scale-105 hover:scale-100 opacity-90 hover:opacity-100 mix-blend-luminosity hover:mix-blend-normal transition-all duration-700 ease-out"
+                  priority
+                />
+                {/* Inner Gradient Overlay for Depth */}
+                <div className="absolute inset-0 bg-gradient-to-t from-void/80 via-transparent to-transparent pointer-events-none"></div>
+              </div>
             </div>
+
+            {/* Corner Tech Accents */}
+            <div className="absolute -top-4 -right-4 w-16 h-16 border-t-2 border-r-2 border-iridescent-b/50 rounded-tr-xl opacity-60"></div>
+            <div className="absolute -bottom-4 -left-4 w-16 h-16 border-b-2 border-l-2 border-iridescent-a/50 rounded-bl-xl opacity-60"></div>
           </div>
         </motion.div>
       </motion.div>
