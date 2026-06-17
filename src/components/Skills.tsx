@@ -100,7 +100,10 @@ export default function Skills() {
 
         {/* Network Graph Container */}
         <div className="w-full overflow-x-auto pb-8" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-          <div className="min-w-[1000px] w-full min-h-[500px] aspect-[16/9] lg:aspect-[2/1] bg-surface border border-white/10 rounded-[2.5rem] relative overflow-hidden shadow-2xl">
+          <div 
+            className="min-w-[1000px] w-full min-h-[500px] aspect-[16/9] lg:aspect-[2/1] bg-surface border border-white/10 rounded-[2.5rem] relative overflow-hidden shadow-2xl"
+            onClick={() => setHoveredNode(null)}
+          >
             
             {/* Background glows inside the container */}
             <div className="absolute top-1/4 left-1/4 w-[300px] h-[300px] bg-iridescent-a/5 rounded-full blur-[100px] pointer-events-none" />
@@ -143,11 +146,16 @@ export default function Skills() {
                 <motion.div
                   key={node.id}
                   variants={badgeStagger}
-                  className="absolute z-10 cursor-default"
+                  className="absolute z-10 cursor-pointer"
                   style={{ left: `${node.x}%`, top: `${node.y}%`, x: "-50%", y: "-50%" }}
                   whileHover={{ scale: 1.05, zIndex: 20 }}
+                  whileTap={{ scale: 0.95 }}
                   onHoverStart={() => setHoveredNode(node.id)}
                   onHoverEnd={() => setHoveredNode(null)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setHoveredNode(hoveredNode === node.id ? null : node.id);
+                  }}
                 >
                   <motion.div
                     animate={{ y: [0, -8, 0] }}
@@ -156,8 +164,8 @@ export default function Skills() {
                     <div className={`
                       px-4 py-2 rounded-full font-mono text-xs md:text-sm whitespace-nowrap backdrop-blur-md
                       transition-all duration-300
-                      ${node.glow 
-                        ? 'bg-void text-chrome-2 border-[1px] border-iridescent-b/80 shadow-[0_0_15px_rgba(168,85,247,0.3)]' 
+                      ${hoveredNode === node.id || node.glow 
+                        ? 'bg-void text-chrome-2 border-[1px] border-iridescent-b/80 shadow-[0_0_15px_rgba(168,85,247,0.4)]' 
                         : 'bg-void/80 text-chrome-1 border border-white/10 hover:border-white/20 hover:text-chrome-2'
                       }
                     `}>
