@@ -108,8 +108,8 @@ export default function RootLayout({
                 name: "QuickFusion Innovations",
               },
               sameAs: [
-                "https://github.com/tejasdhok",
-                "https://linkedin.com/in/tejasdhok",
+                "https://github.com/NovaSyntax753",
+                "https://www.linkedin.com/in/tejas-dhok-329983371/",
               ],
               knowsAbout: [
                 "React",

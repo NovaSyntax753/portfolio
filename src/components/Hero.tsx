@@ -152,8 +152,8 @@ export default function Hero() {
             className="flex gap-6 items-center justify-center lg:justify-start"
           >
             {[
-              { icon: GithubIcon, href: "https://github.com/tejasdhok" },
-              { icon: LinkedinIcon, href: "https://linkedin.com/in/tejasdhok" },
+              { icon: GithubIcon, href: "https://github.com/NovaSyntax753" },
+              { icon: LinkedinIcon, href: "https://www.linkedin.com/in/tejas-dhok-329983371/" },
               { icon: XIcon, href: "https://x.com/TejasDhok28" },
             ].map((social, i) => (
               <a

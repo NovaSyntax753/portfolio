@@ -7,8 +7,8 @@ import { GithubIcon, LinkedinIcon, XIcon } from './Icons';
 import MagneticWrapper from './MagneticWrapper';
 
 const socialLinks = [
-  { icon: GithubIcon, href: 'https://github.com/tejasdhok', label: 'GitHub' },
-  { icon: LinkedinIcon, href: 'https://linkedin.com/in/tejasdhok', label: 'LinkedIn' },
+  { icon: GithubIcon, href: 'https://github.com/NovaSyntax753', label: 'GitHub' },
+  { icon: LinkedinIcon, href: 'https://www.linkedin.com/in/tejas-dhok-329983371/', label: 'LinkedIn' },
   { icon: XIcon, href: 'https://x.com/TejasDhok28', label: 'X (Twitter)' },
 ];
 
