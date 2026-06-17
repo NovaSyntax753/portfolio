@@ -45,7 +45,7 @@ export default function Contact() {
     setIsSubmitting(true);
     
     const formData = new FormData(e.currentTarget);
-    formData.append('access_key', 'YOUR_ACCESS_KEY_HERE');
+    formData.append('access_key', '399e5131-010b-4456-b708-881279fff6f3');
     
     try {
       const endpoint = ['https://api', 'web3forms.com', 'submit'].join('.');
