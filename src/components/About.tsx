@@ -12,41 +12,26 @@ const infoItems = [
   { icon: Mail, label: 'Email', value: 'tejasdhok09@gmail.com' },
 ];
 
+const sectionVariants = {
+  hidden: { opacity: 0, y: 32 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as any } }
+};
+
 const containerVariants = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.1 } },
 };
 
-const WordReveal = ({ text }: { text: string }) => {
-  const words = text.split(" ");
-  return (
-    <motion.p
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-100px" }}
-      className="leading-relaxed text-chrome-1 mb-6 text-lg font-body flex flex-wrap"
-    >
-      {words.map((word, i) => (
-        <motion.span
-          key={i}
-          variants={{
-            hidden: { opacity: 0, y: 10 },
-            visible: { opacity: 1, y: 0, transition: { delay: i * 0.02, duration: 0.4 } }
-          }}
-          className="mr-1.5"
-        >
-          {word}
-        </motion.span>
-      ))}
-    </motion.p>
-  );
-};
-
 export default function About() {
   return (
     <section id="about" className="bg-void py-24 px-4 sm:px-6 relative overflow-hidden">
-      <div className="mx-auto max-w-7xl">
+      <motion.div 
+        variants={sectionVariants} 
+        initial="hidden" 
+        whileInView="visible" 
+        viewport={{ once: true, margin: "-80px" }}
+        className="mx-auto max-w-7xl"
+      >
         <SectionTitle title="ABOUT" subtitle="Who I Am" />
 
         <div className="grid gap-12 lg:grid-cols-2 items-center">
@@ -77,11 +62,27 @@ export default function About() {
               viewport={{ once: true }}
               className="text-3xl font-heading text-iridescent-a tracking-widest uppercase mb-8"
             >
-              Aspiring Developer based in India
+              Full-Stack Developer · 1+ Year Commercial Experience · 6 Live Products
             </motion.h3>
 
-            <WordReveal text="I am a tech enthusiast skilled in Next.js, React, TypeScript, Python, REST APIs, and Supabase. Experienced in building responsive web applications, scalable backend systems, and AI-assisted development workflows with modern frontend and backend technologies." />
-            <WordReveal text="Currently doing an internship at QuickFusion Innovations as a Full Stack Developer, building production business websites. Passionate about creating elegant, user-friendly applications with stunning visual aesthetics and exceptional performance." />
+            <motion.p
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              className="leading-relaxed text-chrome-1 mb-6 text-lg font-body"
+            >
+              I'm a full-stack developer specializing in Next.js, React, TypeScript, Python, REST APIs, and Supabase. I build responsive web applications, scalable backend systems, and AI-assisted development workflows — with a focus on performance, clean code, and stunning UI.
+            </motion.p>
+            <motion.p
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              className="leading-relaxed text-chrome-1 mb-6 text-lg font-body"
+            >
+              Currently completing my B.Tech in Artificial Intelligence at G.H. Raisoni College of Engineering, Nagpur, while working as a Full-Stack Developer Intern at QuickFusion Innovations — delivering production websites used by real businesses.
+            </motion.p>
 
             {/* Info grid */}
             <motion.div
@@ -98,14 +99,14 @@ export default function About() {
                     hidden: { opacity: 0, scale: 0.9 },
                     visible: { opacity: 1, scale: 1, transition: { duration: 0.4 } }
                   }}
-                  className="group flex items-start gap-4 glass-panel rounded-xl p-5 hover:bg-white/5 transition-all duration-500 relative overflow-hidden"
+                  className="group flex items-start gap-4 bg-surface rounded-xl p-5 hover:bg-white/5 transition-all duration-500 relative overflow-hidden"
                 >
                   <div className="absolute inset-0 border border-white/10 rounded-xl transition-all duration-1000 group-hover:border-transparent" />
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 rounded-xl transition-all duration-500 border border-transparent group-hover:border-iridescent-a group-hover:animate-[gradient-rotate_3s_linear_infinite] group-hover:border-[image:linear-gradient(to_right,var(--iridescent-a),var(--iridescent-b),var(--iridescent-a))_1]" style={{ borderImageSlice: 1 }} />
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 rounded-xl transition-all duration-500 border border-transparent group-hover:border-iridescent-a" />
                   
                   <item.icon className="h-6 w-6 shrink-0 text-chrome-2 group-hover:text-iridescent-a transition-colors duration-300 relative z-10" />
                   <div className="relative z-10">
-                    <p className="text-xs tracking-widest uppercase font-mono text-white/50">{item.label}</p>
+                    <p className="text-xs tracking-widest uppercase font-mono text-chrome-1/50">{item.label}</p>
                     <p className="text-sm font-medium text-chrome-2 mt-1">
                       {item.value}
                     </p>
@@ -115,7 +116,7 @@ export default function About() {
             </motion.div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

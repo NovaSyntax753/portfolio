@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { useTrail, animated, useSpring } from "@react-spring/web";
+import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
@@ -47,13 +46,17 @@ export default function Navbar() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
+        // Find the most visible entry
+        const visibleEntries = entries.filter(e => e.isIntersecting);
+        if (visibleEntries.length > 0) {
+          // Sort by intersection ratio or simply pick the first one
+          const mostVisible = visibleEntries.reduce((prev, current) => {
+            return (prev.intersectionRatio > current.intersectionRatio) ? prev : current;
+          });
+          setActiveSection(mostVisible.target.id);
+        }
       },
-      { rootMargin: "-40% 0px -55% 0px" }
+      { rootMargin: "-20% 0px -60% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
     );
 
     navLinks.forEach((link) => {
@@ -71,20 +74,6 @@ export default function Navbar() {
       el.scrollIntoView({ behavior: "smooth" });
     }
   };
-
-  // Mobile Menu Springs
-  const menuSpring = useSpring({
-    opacity: isMobileOpen ? 1 : 0,
-    pointerEvents: isMobileOpen ? "auto" : "none",
-    config: { tension: 280, friction: 60 },
-  });
-
-  const trail = useTrail(navLinks.length, {
-    config: { mass: 1, tension: 280, friction: 20 },
-    opacity: isMobileOpen ? 1 : 0,
-    x: 0,
-    y: isMobileOpen ? 0 : 50,
-  });
 
   return (
     <>
@@ -112,7 +101,7 @@ export default function Navbar() {
                       handleClick(link.href);
                     }}
                     className={`relative text-sm font-mono tracking-widest uppercase transition-colors duration-300 cursor-pointer ${
-                      isActive ? "text-chrome-2 chromatic-text" : "text-white/40 hover:text-chrome-2"
+                      isActive ? "text-chrome-2" : "text-chrome-1/50 hover:text-chrome-2"
                     }`}
                   >
                     {link.name}
@@ -145,36 +134,42 @@ export default function Navbar() {
       </nav>
 
       {/* Mobile Menu Overlay */}
-      <animated.div
-        style={{
-          opacity: menuSpring.opacity,
-          pointerEvents: isMobileOpen ? 'auto' : 'none'
-        }}
-        className="fixed inset-0 z-50 bg-void/95 backdrop-blur-3xl flex flex-col items-center justify-center md:hidden"
-      >
-        <div className="flex flex-col items-center gap-8">
-          {trail.map((style, index) => {
-            const link = navLinks[index];
-            const isActive = activeSection === link.href.slice(1);
-            return (
-              <animated.a
-                key={link.name}
-                href={link.href}
-                style={{ ...style }}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleClick(link.href);
-                }}
-                className={`text-4xl font-heading tracking-widest uppercase cursor-pointer ${
-                  isActive ? "text-transparent bg-clip-text bg-gradient-to-r from-iridescent-a to-iridescent-b" : "text-chrome-2"
-                }`}
-              >
-                {link.name}
-              </animated.a>
-            );
-          })}
-        </div>
-      </animated.div>
+      <AnimatePresence>
+        {isMobileOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-50 bg-void/95 backdrop-blur-3xl flex flex-col items-center justify-center md:hidden"
+          >
+            <div className="flex flex-col items-center gap-8">
+              {navLinks.map((link, index) => {
+                const isActive = activeSection === link.href.slice(1);
+                return (
+                  <motion.a
+                    key={link.name}
+                    href={link.href}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ delay: index * 0.1, duration: 0.3 }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleClick(link.href);
+                    }}
+                    className={`text-4xl font-heading tracking-widest uppercase cursor-pointer ${
+                      isActive ? "text-transparent bg-clip-text bg-gradient-to-r from-iridescent-a to-iridescent-b" : "text-chrome-2"
+                    }`}
+                  >
+                    {link.name}
+                  </motion.a>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

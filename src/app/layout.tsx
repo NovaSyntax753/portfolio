@@ -7,26 +7,27 @@ const bebasNeue = Bebas_Neue({
   subsets: ["latin"],
   variable: "--font-heading",
   display: "swap",
-  weight: ["400"],
+  weight: "400",
 });
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-body",
   display: "swap",
-  weight: ["400", "500", "700"],
+  weight: ["400", "500"],
 });
 
 const firaCode = Fira_Code({
   subsets: ["latin"],
   variable: "--font-mono",
   display: "swap",
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
-  title: "Tejas Dhok | Full Stack Developer",
+  title: "Tejas Dhok | Full-Stack Developer — Next.js, TypeScript, Supabase",
   description:
-    "Full-stack developer skilled in Next.js, React, TypeScript, Python, REST APIs, and Supabase. Experienced in building responsive web applications, scalable backend systems, and AI-assisted development workflows.",
+    "Full-Stack Developer with 1+ year commercial experience. Building production web apps with Next.js, TypeScript, React, and Supabase. Available for full-time roles, June 2026.",
   keywords: [
     "Tejas Dhok",
     "Full Stack Developer",
@@ -35,25 +36,35 @@ export const metadata: Metadata = {
     "TypeScript",
     "Portfolio",
     "Web Developer",
-    "Chandrapur",
-    "India",
+    "Nagpur developer",
+    "fresher full stack developer India",
+    "Next.js developer India",
+    "hire full stack developer 2026",
   ],
   authors: [{ name: "Tejas Dhok" }],
   creator: "Tejas Dhok",
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://tejasdhok.vercel.app",
-    title: "Tejas Dhok | Full Stack Developer",
+    url: "https://tejasdhok.dev",
+    title: "Tejas Dhok | Full-Stack Developer — Next.js, TypeScript, Supabase",
     description:
-      "Full-stack developer building responsive web applications with Next.js, React, TypeScript, and Supabase.",
+      "Full-Stack Developer with 1+ year commercial experience. Building production web apps with Next.js, TypeScript, React, and Supabase. Available for full-time roles, June 2026.",
     siteName: "Tejas Dhok Portfolio",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Tejas Dhok | Full-Stack Developer",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tejas Dhok | Full Stack Developer",
+    title: "Tejas Dhok | Full-Stack Developer — Next.js, TypeScript, Supabase",
     description:
-      "Full-stack developer building responsive web applications with Next.js, React, TypeScript, and Supabase.",
+      "Full-Stack Developer with 1+ year commercial experience. Building production web apps with Next.js, TypeScript, React, and Supabase. Available for full-time roles, June 2026.",
   },
   robots: {
     index: true,
@@ -69,7 +80,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        <link rel="canonical" href="https://tejasdhok.vercel.app" />
+        <link rel="canonical" href="https://tejasdhok.dev" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -77,20 +88,20 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Person",
               name: "Tejas Dhok",
-              url: "https://tejasdhok.vercel.app",
+              url: "https://tejasdhok.dev",
               email: "tejasdhok09@gmail.com",
               jobTitle: "Full Stack Developer",
               description:
-                "Full-stack developer skilled in Next.js, React, TypeScript, Python, REST APIs, and Supabase.",
+                "Full-Stack Developer with 1+ year commercial experience. Building production web apps with Next.js, TypeScript, React, and Supabase. Available for full-time roles, June 2026.",
               address: {
                 "@type": "PostalAddress",
-                addressLocality: "Chandrapur",
+                addressLocality: "Nagpur",
                 addressRegion: "Maharashtra",
                 addressCountry: "IN",
               },
               alumniOf: {
                 "@type": "CollegeOrUniversity",
-                name: "G. H. Raisoni College of Engineering and Management, Nagpur",
+                name: "G. H. Raisoni College of Engineering, Nagpur",
               },
               worksFor: {
                 "@type": "Organization",

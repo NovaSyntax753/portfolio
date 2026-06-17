@@ -27,7 +27,7 @@ const educationHistory = [
     college: 'G. H. Raisoni College of Engineering and Management, Nagpur',
     year: '2022 – 2026 (Expected)',
     score: '',
-    active: false,
+    active: true,
     areas: [
       'Machine Learning',
       'Deep Learning',
@@ -42,7 +42,7 @@ const educationHistory = [
     field: '',
     college: 'Dr. Ambedkar College of Science, Chandrapur',
     year: '2022',
-    score: '71.00%',
+    score: '',
     active: false,
     areas: [],
   },
@@ -51,7 +51,7 @@ const educationHistory = [
     field: '',
     college: "St. Michael's School, Chandrapur",
     year: '2020',
-    score: '85.20%',
+    score: '',
     active: false,
     areas: [],
   },
@@ -72,6 +72,11 @@ const springSlideIn = {
   }),
 };
 
+const sectionVariants = {
+  hidden: { opacity: 0, y: 32 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as any } }
+};
+
 export default function Experience() {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -82,10 +87,16 @@ export default function Experience() {
 
   return (
     <section id="experience" className="bg-void py-24 px-4 sm:px-6 relative overflow-hidden">
-      <div className="max-w-6xl mx-auto relative z-10">
+      <motion.div 
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+        className="max-w-6xl mx-auto relative z-10"
+      >
         <SectionTitle title="EXPERIENCE" subtitle="The Journey" />
 
-        <div ref={containerRef} className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div ref={containerRef} className="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-14">
           {/* Work Experience Column */}
           <motion.div
             initial="hidden"
@@ -101,7 +112,7 @@ export default function Experience() {
                 <Briefcase className="w-5 h-5 text-iridescent-a" />
               </div>
               <h3 className="text-2xl font-semibold text-chrome-2 font-heading tracking-widest uppercase">
-                Internship Experience
+                Experience
               </h3>
             </motion.div>
 
@@ -123,29 +134,29 @@ export default function Experience() {
                   className="relative mb-12 last:mb-0 group"
                 >
                   {/* Timeline dot */}
-                  <div className={`absolute -left-10 top-1.5 w-4 h-4 rounded-full border-2 border-void transition-colors duration-500 z-10 ${
-                    job.active ? "bg-iridescent-a shadow-[0_0_15px_rgba(0,255,247,0.8)] animate-pulse" : "bg-white/20 group-hover:bg-iridescent-b"
+                  <div className={`absolute -left-10 top-1.5 w-4 h-4 rounded-full border-2 border-background-primary transition-colors duration-500 z-10 ${
+                    job.active ? "bg-iridescent-a shadow-[0_0_15px_rgba(124,58,237,0.8)] animate-pulse" : "bg-white/20 group-hover:bg-iridescent-b"
                   }`} />
 
-                  <div className="glass-panel p-6 rounded-2xl border border-white/5 hover:border-iridescent-a/30 transition-colors duration-500">
+                  <div className="bg-surface p-6 rounded-2xl border border-white/10 hover:border-iridescent-a/50 hover:shadow-[0_0_20px_rgba(124,58,237,0.1)] transition-all duration-500">
                     <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
                       <h4 className="text-xl font-bold text-chrome-2 font-heading">
                         {job.title}
                       </h4>
-                      <span className="font-mono text-xs tracking-widest uppercase text-iridescent-a border border-iridescent-a/20 bg-iridescent-a/5 px-3 py-1 rounded-full">
+                      <span className="font-mono text-xs tracking-widest uppercase text-iridescent-a border border-iridescent-a/20 bg-iridescent-a/10 px-3 py-1 rounded-full">
                         {job.date}
                       </span>
                     </div>
-                    <p className="text-chrome-1 text-sm mb-4 font-mono uppercase tracking-wider text-white/50">
+                    <p className="text-chrome-1 text-sm mb-4 font-mono uppercase tracking-wider">
                       {job.company}
                     </p>
                     <ul className="space-y-3">
                       {job.bullets.map((bullet, bIndex) => (
                         <li
                           key={bIndex}
-                          className="flex items-start gap-3 text-sm text-chrome-1/80 leading-relaxed"
+                          className="flex items-start gap-3 text-sm text-chrome-1 leading-relaxed"
                         >
-                          <span className="mt-2 w-1 h-1 rounded-full bg-iridescent-c shrink-0 shadow-[0_0_5px_rgba(255,107,255,0.8)]" />
+                          <span className="mt-2 w-1.5 h-1.5 rounded-full bg-iridescent-b shrink-0 shadow-[0_0_5px_rgba(168,85,247,0.8)]" />
                           {bullet}
                         </li>
                       ))}
@@ -191,21 +202,21 @@ export default function Experience() {
                   className="relative mb-12 last:mb-0 group"
                 >
                   {/* Timeline dot */}
-                  <div className={`absolute -left-10 top-1.5 w-4 h-4 rounded-full border-2 border-void transition-colors duration-500 z-10 ${
-                    edu.active ? "bg-iridescent-b shadow-[0_0_15px_rgba(191,0,255,0.8)] animate-pulse" : "bg-white/20 group-hover:bg-iridescent-c"
+                  <div className={`absolute -left-10 top-1.5 w-4 h-4 rounded-full border-2 border-background-primary transition-colors duration-500 z-10 ${
+                    edu.active ? "bg-iridescent-b shadow-[0_0_15px_rgba(168,85,247,0.8)] animate-pulse" : "bg-white/20 group-hover:bg-iridescent-a"
                   }`} />
 
-                  <div className="glass-panel p-6 rounded-2xl border border-white/5 hover:border-iridescent-b/30 transition-colors duration-500">
+                  <div className="bg-surface p-6 rounded-2xl border border-white/10 hover:border-iridescent-b/50 hover:shadow-[0_0_20px_rgba(168,85,247,0.1)] transition-all duration-500">
                     <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
                       <h4 className="text-xl font-bold text-chrome-2 font-heading">
                         {edu.degree}
                       </h4>
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs tracking-widest uppercase text-iridescent-b border border-iridescent-b/20 bg-iridescent-b/5 px-3 py-1 rounded-full">
+                        <span className="font-mono text-xs tracking-widest uppercase text-iridescent-b border border-iridescent-b/20 bg-iridescent-b/10 px-3 py-1 rounded-full">
                           {edu.year}
                         </span>
                         {edu.score && (
-                          <span className="font-mono text-xs tracking-widest uppercase text-iridescent-c border border-iridescent-c/20 bg-iridescent-c/5 px-3 py-1 rounded-full">
+                          <span className="font-mono text-xs tracking-widest uppercase text-iridescent-d border border-iridescent-d/20 bg-iridescent-d/10 px-3 py-1 rounded-full">
                             {edu.score}
                           </span>
                         )}
@@ -221,11 +232,11 @@ export default function Experience() {
                     </p>
 
                     {edu.areas.length > 0 && (
-                      <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-white/5">
+                      <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-white/10">
                         {edu.areas.map((area) => (
                           <span
                             key={area}
-                            className="text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full bg-void border border-white/10 text-chrome-1/70"
+                            className="text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full bg-surface border border-white/10 text-chrome-1"
                           >
                             {area}
                           </span>
@@ -238,7 +249,7 @@ export default function Experience() {
             </div>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

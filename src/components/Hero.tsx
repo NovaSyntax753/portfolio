@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { Download, FolderOpen } from 'lucide-react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
-import { GithubIcon, LinkedinIcon, InstagramIcon, XIcon } from './Icons';
+import { GithubIcon, LinkedinIcon, XIcon } from './Icons';
 import MagneticWrapper from './MagneticWrapper';
 
 // Lazy load Three.js component
@@ -101,13 +101,22 @@ export default function Hero() {
             </div>
           </motion.div>
 
+          {/* Availability Badge */}
+          <motion.div variants={textReveal} className="mb-6 flex items-center gap-3 bg-surface border border-white/10 rounded-full px-4 py-2 w-fit">
+            <div className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-iridescent-d opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-iridescent-d shadow-[0_0_8px_#4dffb4]"></span>
+            </div>
+            <span className="text-[13px] font-medium text-chrome-1">Available for full-time roles · Graduating June 2026</span>
+          </motion.div>
+
           {/* Role Tag & Typing */}
           <motion.div variants={textReveal} className="mb-10">
-            <div className="inline-block px-4 py-2 border border-white/10 rounded-full bg-surface backdrop-blur-md text-chrome-2 font-mono text-sm tracking-widest uppercase mb-6 shadow-xl">
-              Software Engineer / Designer
+            <div className="inline-block px-5 py-3 border border-white/10 rounded-full bg-surface backdrop-blur-md text-chrome-2 font-mono text-sm tracking-widest uppercase mb-6 shadow-xl max-w-2xl leading-relaxed">
+              FULL-STACK DEVELOPER BUILDING PRODUCTION APPS WITH NEXT.JS, TYPESCRIPT & SUPABASE
             </div>
-            <div className="text-iridescent-a font-mono text-lg md:text-xl h-8">
-              {typedText}<span className="typing-cursor"></span>
+            <div className="text-iridescent-b font-mono text-lg md:text-xl h-8 flex items-center">
+              {typedText}<span className="inline-block w-3 h-5 ml-2 bg-iridescent-b animate-pulse"></span>
             </div>
           </motion.div>
 
@@ -118,20 +127,21 @@ export default function Hero() {
             <MagneticWrapper pullFactor={20}>
               <a
                 href="#projects"
-                className="liquid-btn group flex items-center gap-3 px-8 py-4 rounded-xl font-mono text-sm tracking-widest uppercase shadow-2xl shadow-iridescent-a/10"
+                className="group relative overflow-hidden flex items-center gap-3 px-8 py-4 rounded-xl bg-surface border border-white/10 text-chrome-2 font-mono text-sm tracking-widest uppercase shadow-xl transition-all duration-300 z-10 hover:border-transparent hover:text-void"
               >
-                <FolderOpen className="w-5 h-5 group-hover:animate-bounce" />
-                View Projects
+                <div className="absolute inset-0 bg-gradient-to-r from-iridescent-a to-iridescent-b opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+                <FolderOpen className="w-5 h-5 group-hover:text-void transition-colors duration-300" />
+                <span>View Projects</span>
               </a>
             </MagneticWrapper>
             <MagneticWrapper pullFactor={20}>
               <a
                 href="/resume.pdf"
                 download
-                className="group relative flex items-center gap-3 px-8 py-4 rounded-xl border border-white/10 text-chrome-2 font-mono text-sm tracking-widest uppercase chromatic-text transition-all duration-300 hover:border-iridescent-c hover:bg-white/5"
+                className="group flex items-center gap-3 px-8 py-4 rounded-2xl bg-transparent border border-white/10 text-chrome-2 font-mono text-sm tracking-widest uppercase transition-all duration-300 hover:border-iridescent-c hover:bg-white/5"
               >
-                <Download className="w-5 h-5 text-iridescent-c group-hover:-translate-y-1 transition-transform" />
-                Resume
+                <Download className="w-5 h-5 text-iridescent-c group-hover:chromatic-icon transition-transform" />
+                <span className="group-hover:chromatic-text">Resume</span>
               </a>
             </MagneticWrapper>
           </motion.div>
@@ -139,12 +149,11 @@ export default function Hero() {
           {/* Social Links */}
           <motion.div
             variants={textReveal}
-            className="flex gap-6 items-center"
+            className="flex gap-6 items-center justify-center lg:justify-start"
           >
             {[
               { icon: GithubIcon, href: "https://github.com/tejasdhok" },
               { icon: LinkedinIcon, href: "https://linkedin.com/in/tejasdhok" },
-              { icon: InstagramIcon, href: "https://www.instagram.com/tejasdhok28/" },
               { icon: XIcon, href: "https://x.com/TejasDhok28" },
             ].map((social, i) => (
               <a
@@ -152,9 +161,9 @@ export default function Hero() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 flex items-center justify-center rounded-full border border-white/10 text-chrome-2 hover:border-iridescent-b hover:text-iridescent-b hover:shadow-[0_0_20px_rgba(191,0,255,0.3)] transition-all duration-300"
+                className="group w-14 h-14 flex items-center justify-center rounded-full bg-surface border border-white/10 text-chrome-2 hover:border-iridescent-b hover:shadow-[0_0_20px_rgba(191,0,255,0.2)] transition-all duration-300"
               >
-                <social.icon className="w-5 h-5" />
+                <social.icon className="w-6 h-6 group-hover:text-iridescent-b group-hover:drop-shadow-[0_0_8px_rgba(191,0,255,0.8)] transition-all duration-300" />
               </a>
             ))}
           </motion.div>
