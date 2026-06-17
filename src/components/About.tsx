@@ -7,7 +7,7 @@ import SectionTitle from './SectionTitle';
 
 const infoItems = [
   { icon: MapPin, label: 'Location', value: 'Chandrapur, India' },
-  { icon: Briefcase, label: 'Experience', value: '1+ Year' },
+  { icon: Briefcase, label: 'Experience', value: '7+ Months' },
   { icon: GraduationCap, label: 'Education', value: 'B.Tech AI' },
   { icon: Mail, label: 'Email', value: 'tejasdhok09@gmail.com' },
 ];
@@ -62,7 +62,7 @@ export default function About() {
               viewport={{ once: true }}
               className="text-3xl font-heading text-iridescent-a tracking-widest uppercase mb-8"
             >
-              Full-Stack Developer · 1+ Year Commercial Experience · 6 Live Products
+              Full-Stack Developer · 6 Months Professional Internship Experience · 6 Live Products
             </motion.h3>
 
             <motion.p

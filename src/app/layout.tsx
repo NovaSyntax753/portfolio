@@ -27,7 +27,7 @@ const firaCode = Fira_Code({
 export const metadata: Metadata = {
   title: "Tejas Dhok | Full-Stack Developer — Next.js, TypeScript, Supabase",
   description:
-    "Full-Stack Developer with 1+ year commercial experience. Building production web apps with Next.js, TypeScript, React, and Supabase. Available for full-time roles, June 2026.",
+    "Full-Stack Developer with 6 months professional internship experience. Building production web apps with Next.js, TypeScript, React, and Supabase. Available for full-time roles, June 2026.",
   keywords: [
     "Tejas Dhok",
     "Full Stack Developer",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     url: "https://tejasdhok.dev",
     title: "Tejas Dhok | Full-Stack Developer — Next.js, TypeScript, Supabase",
     description:
-      "Full-Stack Developer with 1+ year commercial experience. Building production web apps with Next.js, TypeScript, React, and Supabase. Available for full-time roles, June 2026.",
+      "Full-Stack Developer with 6 months professional internship experience. Building production web apps with Next.js, TypeScript, React, and Supabase. Available for full-time roles, June 2026.",
     siteName: "Tejas Dhok Portfolio",
     images: [
       {
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Tejas Dhok | Full-Stack Developer — Next.js, TypeScript, Supabase",
     description:
-      "Full-Stack Developer with 1+ year commercial experience. Building production web apps with Next.js, TypeScript, React, and Supabase. Available for full-time roles, June 2026.",
+      "Full-Stack Developer with 6 months professional internship experience. Building production web apps with Next.js, TypeScript, React, and Supabase. Available for full-time roles, June 2026.",
   },
   robots: {
     index: true,
@@ -92,7 +92,7 @@ export default function RootLayout({
               email: "tejasdhok09@gmail.com",
               jobTitle: "Full Stack Developer",
               description:
-                "Full-Stack Developer with 1+ year commercial experience. Building production web apps with Next.js, TypeScript, React, and Supabase. Available for full-time roles, June 2026.",
+                "Full-Stack Developer with 6 months professional internship experience. Building production web apps with Next.js, TypeScript, React, and Supabase. Available for full-time roles, June 2026.",
               address: {
                 "@type": "PostalAddress",
                 addressLocality: "Nagpur",
