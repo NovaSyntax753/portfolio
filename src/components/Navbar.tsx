@@ -143,6 +143,15 @@ export default function Navbar() {
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-50 bg-void/95 backdrop-blur-3xl flex flex-col items-center justify-center md:hidden"
           >
+            {/* Close Button */}
+            <button
+              onClick={() => setIsMobileOpen(false)}
+              className="absolute top-4 right-4 sm:right-6 w-12 h-12 flex items-center justify-center cursor-pointer text-chrome-2 hover:text-white transition-colors"
+              aria-label="Close menu"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
             <div className="flex flex-col items-center gap-8">
               {navLinks.map((link, index) => {
                 const isActive = activeSection === link.href.slice(1);
