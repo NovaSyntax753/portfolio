@@ -118,9 +118,10 @@ export default function ChromaticShatter() {
     // Animation Loop with 60fps cap
     const clock = new THREE.Clock();
     let time = 0;
+    let frameId: number;
     
     const animate = () => {
-      const requestId = requestAnimationFrame(animate);
+      frameId = requestAnimationFrame(animate);
       if (!isTabVisible) return;
 
       const delta = clock.getDelta();
@@ -160,14 +161,12 @@ export default function ChromaticShatter() {
       material.color.setHSL(hue, 1, 0.5);
 
       renderer.render(scene, camera);
-
-      return requestId;
     };
 
-    const requestId = animate();
+    animate();
 
     return () => {
-      cancelAnimationFrame(requestId as number);
+      cancelAnimationFrame(frameId);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("resize", onResize);
       document.removeEventListener("visibilitychange", onVisibilityChange);
